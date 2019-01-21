@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import NumberFormat from 'react-number-format';
+import { updateCategoryAmount } from '../../actions/categoriesActionCreator';
+import { connect } from 'react-redux';
 
 export class ChangeAmountInput extends Component {
   state = {
@@ -14,8 +16,10 @@ export class ChangeAmountInput extends Component {
   }
 
   onSubmit = (e) => {
+    const { dispatch, id } = this.props;
+    const { currentAmount }= this.state;
     e.preventDefault();
-    this.props.updateAmount(this.props.id, this.state.currentAmount);
+    dispatch(updateCategoryAmount(id, currentAmount));
   }
 
   render() {
@@ -29,4 +33,4 @@ export class ChangeAmountInput extends Component {
   }
 }
 
-export default ChangeAmountInput
+export default connect() (ChangeAmountInput)

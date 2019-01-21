@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import NumberFormat from 'react-number-format';
+import { connect } from 'react-redux';
+import { addCategory } from '../../actions/categoriesActionCreator';
+import uuid from 'uuid';
 
 export class AddSavingCategory extends Component {
 
@@ -14,10 +17,35 @@ export class AddSavingCategory extends Component {
     });
   }
 
+  postCategory = async () => {
+    let { name, goal } = this.state;
+    let newCategory = {
+      id: uuid.v4(),
+      name,
+      currentAmount: 0,
+      goal
+    }
+    await fetch('/categories', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCategory)
+    })
+    .then((res) => {
+      console.log(res);
+    })
+  }
+
   onSubmit = (e) => {
+    const { dispatch } = this.props;
+    const { name, goal } = this.state;
     e.preventDefault();
-    let convertedNumber = Number(this.state.goal.replace(/[^0-9\.-]+/g,""))
-    this.props.addNewGoal(this.state.name, convertedNumber);
+    this.postCategory().then((res) => {
+        let convertedNumber = Number(goal.replace(/[^0-9\.-]+/g,""));
+        dispatch(addCategory(name, convertedNumber));
+    });
   }
 
   render() {
@@ -42,4 +70,4 @@ const formStyle = {
   paddingTop: '5%'
 }
 
-export default AddSavingCategory
+export default connect() (AddSavingCategory)

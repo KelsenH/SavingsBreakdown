@@ -4,10 +4,9 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import './styles/App.css';
 import AddSavingCategory from './components/AddSavingCategory/AddSavingCategory';
 import SavingCategoriesDashboard from './components/SavingCategory/SavingCategoriesDashboard';
-import uuid from 'uuid';
 
 import { connect } from 'react-redux';
-import { categoriesFetchData, updateCategoryAmount } from './actions/categoriesActionCreator';
+import { categoriesFetchData } from './actions/categoriesActionCreator';
 
 class App extends Component {
   componentDidMount() {
@@ -18,36 +17,9 @@ class App extends Component {
   }
 
   getCategories = async () => {
-    let response = await fetch('/getCategories');
+    let response = await fetch('/categories');
     let categories = await response.json();
     return categories;
-  }
-
-  updateAmount = (id, newAmount) => {
-    // this.setState({
-    //   savingCategories: this.state.savingCategories.map(category => {
-    //     if(category.id === id) category.currentAmount = newAmount;
-    //     return category;
-    //   })
-    // });
-  }
-
-  removeGoal = (id) => {
-    // this.setState({
-    //   savingCategories: [...this.state.savingCategories.filter(category => category.id !== id)]
-    // });
-  }
-
-  addNewGoal = (name, goal) => {
-    // let newGoal = {
-    //   id: uuid.v4(),
-    //   name,
-    //   currentAmount: 0,
-    //   goal
-    // }
-    // this.setState({
-    //   savingCategories: [...this.state.savingCategories, newGoal]
-    // });
   }
 
   render() {
@@ -72,13 +44,6 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
       categories: state.categories
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-      // fetchData: (url) => dispatch(categoriesFetchData(url)),
-      // updateAmount: (id, newAmount) => dispatch(updateCategoryAmount(id, newAmount))
   };
 };
 

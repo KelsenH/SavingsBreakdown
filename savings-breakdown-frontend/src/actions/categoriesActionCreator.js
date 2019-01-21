@@ -13,3 +13,18 @@ export function updateCategoryAmount(id, newAmount) {
         newAmount
     }
 }
+
+export function removeCategory(id) {
+    return {
+        type: 'REMOVE_CATEGORY',
+        id
+    }
+}
+
+export function addCategory(title, goal) {
+    return {
+        type: 'ADD_CATEGORY',
+        title,
+        goal
+    }
+}
