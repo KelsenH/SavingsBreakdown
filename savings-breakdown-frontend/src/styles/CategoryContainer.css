@@ -1,0 +1,21 @@
+.outterDiv {
+   background-color: #f3f3f3;
+    float: left;
+    margin: 15px;
+    padding: 10px;
+    padding-top: 5px;
+    height: 5%;
+    width: 15%;
+}
+
+.deleteBtn {
+  float: right;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 0px;
+  padding-right: 2px;
+  height: 5px;
+  width: 5px;
+  color: red;
+  cursor: pointer;
+}
