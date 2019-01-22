@@ -1,10 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
+const mysql = require('mysql');
+const http = require('http');
 
 const app = express();
-app.use(express.json());
 const port = process.env.PORT || 5000;
+
+app.use(express.json());
+
+const dbConnection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'savings_breakdown'
+});
+
+dbConnection.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected to database");
+});
 
 // console.log that your server is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -20,15 +33,26 @@ let savingCategories = [
 
 // create a GET route
 app.get('/categories', (req, res) => {
-  res.send(savingCategories);
+  dbConnection.query("SELECT * FROM categories", (err,result) => {
+    if (err) throw err;
+    res.send(result);
+  });
 });
 
 app.post('/categories', (req,res) => {
   let newCategory = req.body;
-  savingCategories = [...savingCategories, newCategory];
-  res.json({
-    status: "Success"
+  newCategory.goal = newCategory.goal.replace(/[^\d]/g,"");
+  let insertCategorySql = "INSERT INTO categories (name, currentAmount, goal) VALUES (" + "'" + newCategory.name + "'" + ", " + 0 + ", " + newCategory.goal + ")";
+  dbConnection.query(insertCategorySql, (err, result) => {
+    if (err) throw err;
+    res.sendStatus(200);
   });
-  console.log("New goal added to categories");
-  console.log(savingCategories);
+});
+
+app.put('/categories', (req,res) => {
+  
+});
+
+app.delete('/categories', (req,res) => {
+  
 });
