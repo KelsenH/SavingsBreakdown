@@ -21,27 +21,21 @@ export function categories(state = initialState, action) {
           })
         }
 
-			case 'REMOVE_CATEGORY':
-				return {
-					...state,
-					categories: state.categories.filter((category) => 
-						category.id !== action.id
-					)
-				}
+        case 'REMOVE_CATEGORY':
+            return {
+                ...state,
+                categories: state.categories.filter((category) => 
+                    category.id !== action.id
+                )
+            }
 				
-			case 'ADD_CATEGORY':
-				let newGoal = {
-					id: uuid.v4(),
-					name: action.title,
-					currentAmount: 0,
-					goal: action.goal
-				}
-				return {
-					...state,
-					categories: [...state.categories, newGoal]
-				}
+        case 'ADD_CATEGORY_SUCCESS':
+            return {
+                ...state,
+                categories: [...state.categories, action.newCategory]
+            }
         
-      default:
+        default:
           return state;
   }
 }

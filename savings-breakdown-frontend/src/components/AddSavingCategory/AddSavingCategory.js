@@ -42,10 +42,7 @@ export class AddSavingCategory extends Component {
     const { dispatch } = this.props;
     const { name, goal } = this.state;
     e.preventDefault();
-    this.postCategory().then((res) => {
-        let convertedNumber = Number(goal.replace(/[^0-9\.-]+/g,""));
-        dispatch(addCategory(name, convertedNumber));
-    });
+    dispatch(addCategory(name, goal));
   }
 
   render() {

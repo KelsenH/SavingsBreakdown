@@ -10,16 +10,7 @@ import { categoriesFetchData } from './actions/categoriesActionCreator';
 
 class App extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    this.getCategories().then((res) => {
-      dispatch(categoriesFetchData(res))
-    });
-  }
-
-  getCategories = async () => {
-    let response = await fetch('/categories');
-    let categories = await response.json();
-    return categories;
+    this.props.dispatch(categoriesFetchData());    
   }
 
   render() {
